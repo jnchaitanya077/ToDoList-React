@@ -45,10 +45,10 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-##TODO List App Build in React JS
+## TODO List App Build in React JS
 
-This application is created with react JS and Bootstrap. It was mainly built with the idea of 
-simple user interface. Addition to the Todo list I have integrated weather info. Which would be handily 
+This application is created with react JS and Bootstrap. It was mainly built with the idea of
+simple user interface. Addition to the Todo list I have integrated weather info. Which would be handily
 to know the current weather while working.
 
-###Screen Shots of the Application.
+### Screen Shots of the Application
