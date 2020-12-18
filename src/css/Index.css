@@ -1,0 +1,138 @@
+/* -------------------------------- */
+/* --BASIC SETUP-- */
+/* -------------------------------- */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+}
+
+/* -------------------------------- */
+/* --HTML BODY-- */
+/* -------------------------------- */
+
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url("../images/unsplash.jpg");
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+
+}
+
+.container-fluid {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* -------------------------------- */
+/* --HEADINGS-- */
+/* -------------------------------- */
+
+h1 {
+    color: #ecf0f1;
+    font-size: 320%;
+    padding: 5% 0;
+}
+
+h2 {
+    color: #2c3e50;
+    font-size: 200%;
+}
+
+.tag {
+    font-size: 75%;
+    vertical-align: middle;
+    margin: 3% auto;
+    color: #555;
+    cursor: pointer;
+
+}
+
+/* -------------------------------- */
+/* --TODO-LIST-- */
+/* -------------------------------- */
+
+.inputText {
+    border: none;
+    border-bottom: 1px solid #dbdfe4;
+    text-align: center;
+    width: 100%;
+}
+
+ion-icon {
+    font-size: 32px;
+    color: #2c3e50c0;
+    margin: auto 5px;
+}
+
+input:focus {
+    outline: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* -------------------------------- */
+/* --TODO-TASK-- */
+/* -------------------------------- */
+.card {
+    border-radius: 25px;
+    padding: 15px;
+}
+
+/* -------------------------------- */
+/* --TODO-TASK-- */
+/* -------------------------------- */
+
+/* Hide the browser's default checkbox */
+.Task {
+    float: left;
+    margin-top: 3px;
+    margin-left: 5px;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    margin: 5px;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(116, 114, 114, 0.767);
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background-color 1s;
+
+
+}
+
+.taskIncomplete {
+    background-color: #eee;
+}
+
+
+.taskDone {
+    background-color: #2ecc71;
+}
+
+.deleteIcon ion-icon {
+    font-size: 24px;
+    transition: color 0.4s;
+}
+
+.deleteIcon ion-icon:hover {
+    color: red;
+}
+
+
+label {
+    font-weight: 500;
+    font-size: 100%;
+    color: #2C3A47;
+}
