@@ -52,3 +52,5 @@ simple user interface. Addition to the Todo list I have integrated weather info.
 to know the current weather while working.
 
 ### Screen Shots of the Application
+
+![Alt text](https://github.com/jnchaitanya077/ToDoList-React/blob/master/src/screenshots/screencapture-localhost-3000-2020-12-18-17_18_02.png "a title")
