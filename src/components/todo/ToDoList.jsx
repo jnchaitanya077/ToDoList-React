@@ -2,63 +2,23 @@ import React, { useState } from "react";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
-var id = 0;
-
-function ToDo() {
-  const [list, addTask] = useState({ taskList: [] });
-  const [task, addTaskName] = useState({
-    Id: 0,
-    taskName: "",
-    isDone: false,
-    date: "",
-  });
-
+function ToDo(props) {
   function handleChange(event) {
-    var tName = event.target.value;
-    addTaskName((prev) => {
-      return {
-        ...prev,
-        taskName: tName,
-      };
-    });
+    props.onTaskChange(event);
     event.preventDefault();
   }
 
   function handleSubmit(event) {
-    if (task.taskName !== "") {
-      addTask((prev) => {
-        console.log(id);
-        return {
-          taskList: [
-            ...prev.taskList,
-            { ...task, Id: id++, date: new Date().toDateString() },
-          ],
-        };
-      });
-    }
+    props.onTaskSubmit(event);
     event.preventDefault();
   }
 
   function handleSelect(id) {
-    // find the index of the object selected
-    var i = list.taskList.findIndex((x) => x.Id === id);
-    //   create new copy of taskList array
-    let updatedArray = list.taskList.slice();
-    // update the task status with id
-    updatedArray[i] = {
-      ...updatedArray[i],
-      isDone: !updatedArray[i].isDone,
-    };
-    //set the state with updated taskList
-    addTask({ taskList: updatedArray });
+    props.onTaskSelect(id);
   }
 
   function handleDelete(id) {
-    let i = list.taskList.findIndex((x) => x.Id === id);
-    let newArray = list.taskList.slice();
-    newArray.splice(i, 1);
-    addTask({ taskList: newArray });
-    id--;
+    props.onTaskDelete(id);
   }
 
   return (
@@ -72,7 +32,7 @@ function ToDo() {
               placeholder="Enter Your Task"
               type="text"
               name="taskName"
-              value={task.taskName}
+              value={props.taskName}
               onChange={handleChange}
             />
           </div>
@@ -89,7 +49,7 @@ function ToDo() {
 
         <div style={taskListItems}>
           <ul>
-            {list.taskList.map((eachTask) => {
+            {props.taskList.map((eachTask) => {
               return (
                 <li key={uuidv4()}>
                   {" "}
