@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
+var id = 0;
+
 function ToDo() {
-  var id = 0;
   const [list, addTask] = useState({ taskList: [] });
   const [task, addTaskName] = useState({
-    Id: id,
+    Id: 0,
     taskName: "",
     isDone: false,
+    date: "",
   });
 
   function handleChange(event) {
@@ -21,18 +23,16 @@ function ToDo() {
     });
     event.preventDefault();
   }
+
   function handleSubmit(event) {
     if (task.taskName !== "") {
       addTask((prev) => {
+        console.log(id);
         return {
-          taskList: [...prev.taskList, task],
-        };
-      });
-      addTaskName(() => {
-        return {
-          Id: task.Id + 1,
-          taskName: "",
-          isDone: false,
+          taskList: [
+            ...prev.taskList,
+            { ...task, Id: id++, date: new Date().toDateString() },
+          ],
         };
       });
     }
@@ -58,6 +58,7 @@ function ToDo() {
     let newArray = list.taskList.slice();
     newArray.splice(i, 1);
     addTask({ taskList: newArray });
+    id--;
   }
 
   return (
