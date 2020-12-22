@@ -23,7 +23,9 @@ function Task(props) {
       </div>
 
       <div className="col mr0">
-        <label className="Task">{props.taskName}</label>
+        <label className="Task">
+          {props.isDone ? <del>{props.taskName}</del> : props.taskName}
+        </label>
       </div>
 
       <div className="col-4">

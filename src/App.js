@@ -5,6 +5,7 @@ import Weather from "./components/Weather";
 import Day from "./components/Day";
 // Index CSS
 import "./css/Index.css";
+import Completed from "./components/todo/Completed";
 
 var id = 0;
 function App() {
@@ -82,6 +83,11 @@ function App() {
             onTaskChange={handleChange}
           />
         </div>
+
+        <div className="col-12 col-md-8 col-lg-4">
+          <CompletedList taskList={list.taskList} />
+        </div>
+
         <div className="col float-left">
           <Weather />
         </div>
