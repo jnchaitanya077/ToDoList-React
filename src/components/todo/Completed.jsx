@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import Task from "./Task";
 
 import { v4 as uuidv4 } from "uuid";
 
 function Completed(props) {
-  var [completedCount, setCount] = useState(0);
   function seperate(eachtask) {
     return eachtask.isDone === true;
   }
+
+  function handleSelect(id) {
+    props.onTaskSelect(id);
+  }
+
+  function handleDelete(id) {
+    props.onTaskDelete(id);
+  }
+
   return (
     <div className="card">
       <div className="card-body">
         <h2 className="card-title">
           {props.taskList.length === 0
             ? "No Task Pending"
-            : `Completed Task ${completedCount} / ${props.taskList.length}`}
+            : `Completed Task ${props.completedCount} / ${props.taskList.length}`}
         </h2>
         <ul>
           {props.taskList.filter(seperate).map((filtered) => {
@@ -23,13 +31,14 @@ function Completed(props) {
                 <Task
                   taskName={filtered.taskName}
                   isDone={filtered.isDone}
-                  id={filtered.id}
+                  id={filtered.Id}
+                  onTaskSelect={handleSelect}
+                  onTaskDelete={handleDelete}
                 />
               </li>
             );
           })}
         </ul>
-        {console.log("jj" + completedCount)}
       </div>
     </div>
   );

@@ -5,12 +5,12 @@ import Weather from "./components/Weather";
 import Day from "./components/Day";
 // Index CSS
 import "./css/Index.css";
-import Completed from "./components/todo/Completed";
 
 var id = 0;
 function App() {
   const [list, addTask] = useState({ taskList: [] });
   const [task, addTaskName] = useState("");
+  var [count, setCompletedCount] = useState(0);
 
   function handleChange(event) {
     var tName = event.target.value;
@@ -21,7 +21,6 @@ function App() {
   function handleSubmit(event) {
     if (task.taskName !== "") {
       addTask((prev) => {
-        console.log(id);
         return {
           taskList: [
             ...prev.taskList,
@@ -41,7 +40,7 @@ function App() {
 
   function handleSelect(id) {
     // find the index of the object selected
-    var i = list.taskList.findIndex((x) => x.Id === id);
+    let i = list.taskList.findIndex((x) => x.Id === id);
     //   create new copy of taskList array
     let updatedArray = list.taskList.slice();
     // update the task status with id
@@ -51,6 +50,8 @@ function App() {
     };
     //set the state with updated taskList
     addTask({ taskList: updatedArray });
+    //updated the Completed Task Count
+    setCompletedCount(completedCount(updatedArray));
   }
 
   function handleDelete(id) {
@@ -59,6 +60,13 @@ function App() {
     newArray.splice(i, 1);
     addTask({ taskList: newArray });
     id--;
+    //updated the Completed Task Count
+    setCompletedCount(completedCount(newArray));
+  }
+
+  function completedCount(arr) {
+    const c = arr.filter((eachTask) => eachTask.isDone === true).length;
+    return c;
   }
 
   return (
@@ -85,7 +93,12 @@ function App() {
         </div>
 
         <div className="col-12 col-md-8 col-lg-4">
-          <CompletedList taskList={list.taskList} />
+          <CompletedList
+            taskList={list.taskList}
+            completedCount={count}
+            onTaskSelect={handleSelect}
+            onTaskDelete={handleDelete}
+          />
         </div>
 
         <div className="col float-left">
