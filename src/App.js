@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ToDo from "./components/todo/ToDoList";
 import CompletedList from "./components/todo/Completed";
+import TodaysList from "./components/todo/Today";
 import Weather from "./components/Weather";
 import Day from "./components/Day";
 // Index CSS
@@ -9,6 +10,8 @@ import "./css/Index.css";
 var id = 0;
 function App() {
   const [list, addTask] = useState({ taskList: [] });
+  const [date, setDate] = useState(formatDate(new Date().toLocaleDateString()));
+  const [errMsg, setMsg] = useState("");
   const [task, addTaskName] = useState("");
   var [count, setCompletedCount] = useState(0);
 
@@ -19,7 +22,14 @@ function App() {
   }
 
   function handleSubmit(event) {
-    if (task.taskName !== "") {
+    if (
+      task.taskName !== "" &&
+      validateDate(
+        new Date(date).toLocaleDateString(),
+        new Date().toLocaleDateString()
+      )
+    ) {
+      setMsg(""); // reset the error message.
       addTask((prev) => {
         return {
           taskList: [
@@ -28,13 +38,16 @@ function App() {
               taskName: task,
               isDone: false,
               Id: id++,
-              date: new Date().toDateString(),
+              date: date,
             },
           ],
         };
       });
+    } else {
+      setMsg("Enter Valid Date");
     }
     addTaskName("");
+    setDate(formatDate(new Date().toLocaleDateString()));
     event.preventDefault();
   }
 
@@ -64,9 +77,25 @@ function App() {
     setCompletedCount(completedCount(newArray));
   }
 
+  function handleDateChange(date) {
+    setDate(date);
+  }
+
   function completedCount(arr) {
     const c = arr.filter((eachTask) => eachTask.isDone === true).length;
     return c;
+  }
+
+  function formatDate(date) {
+    let fDate = date.split("/");
+    let nDate = `${fDate[2]}-${fDate[0]}-${fDate[1]}`;
+    return nDate;
+  }
+
+  function validateDate(taskDate, presentDate) {
+    taskDate = new Date(formatDate(taskDate));
+    presentDate = new Date(formatDate(presentDate));
+    return +taskDate >= +presentDate;
   }
 
   return (
@@ -85,14 +114,18 @@ function App() {
           <ToDo
             taskList={list.taskList}
             taskName={task}
+            date={date}
+            err={errMsg}
             onTaskSelect={handleSelect}
             onTaskDelete={handleDelete}
             onTaskSubmit={handleSubmit}
             onTaskChange={handleChange}
+            onDateChange={handleDateChange}
           />
         </div>
 
         <div className="col-12 col-md-8 col-lg-4">
+          <TodaysList taskList={list.taskList} />
           <CompletedList
             taskList={list.taskList}
             completedCount={count}

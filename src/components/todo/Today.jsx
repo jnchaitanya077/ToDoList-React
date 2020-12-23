@@ -2,26 +2,17 @@ import React from "react";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
 
-function Completed(props) {
+function Today(props) {
   function seperate(eachtask) {
-    return eachtask.isDone === true;
+    let todayDate = new Date().toDateString();
+    let taskDate = new Date(eachtask.date).toDateString();
+    return todayDate === taskDate;
   }
-
-  function handleSelect(id) {
-    props.onTaskSelect(id);
-  }
-
-  function handleDelete(id) {
-    props.onTaskDelete(id);
-  }
-
   return (
     <div className="card w-100">
       <div className="card-body">
         <h2 className="card-title">
-          {props.taskList.length === 0
-            ? "No Task Pending"
-            : `Completed Task ${props.completedCount} / ${props.taskList.length}`}
+          {props.taskList.length === 0 ? "No Tasks Today" : "Todays Tasks"}
         </h2>
         <ul>
           {props.taskList.filter(seperate).map((filtered) => {
@@ -31,8 +22,6 @@ function Completed(props) {
                   taskName={filtered.taskName}
                   isDone={filtered.isDone}
                   id={filtered.Id}
-                  onTaskSelect={handleSelect}
-                  onTaskDelete={handleDelete}
                 />
               </li>
             );
@@ -43,4 +32,4 @@ function Completed(props) {
   );
 }
 
-export default Completed;
+export default Today;
