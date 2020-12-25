@@ -10,29 +10,28 @@ function Task(props) {
   }
 
   return (
-    <div className="row animate__animated animate__zoomInDowne">
-      <div className="col-1">
-        <div
-          className={
-            props.isDone ? "checkmark taskDone" : "checkmark taskIncomplete"
-          }
-          onClick={() => {
-            handleClick(props.id);
-          }}
-        ></div>
+    <div className={props.isDone ? "row taskCompleted" : "row m-2"}>
+      <div
+        className={
+          props.isDone ? " checkmark taskDone" : " checkmark taskIncomplete"
+        }
+        onClick={() => {
+          handleClick(props.id);
+        }}
+      ></div>
+      <div className="col-4 pl-0">
+        <label className="Task">{props.taskName}</label>
       </div>
 
-      <div className="col mr0">
-        <label className="Task">
-          {props.isDone ? <del>{props.taskName}</del> : props.taskName}
-        </label>
+      <div className="col-4 dueDate">
+        {/* <p className="tag">Add tag</p> */}
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span className="dueSubText">{props.date}</span>
       </div>
 
-      <div className="col-4">
-        <p className="tag">Add tag</p>
-      </div>
-
-      <div className="col-2 deleteIcon">
+      <div
+        className={props.dtoggle ? "col-3 taskCompleted" : "col-2 deleteIcon "}
+      >
         <ion-icon
           name="trash-outline"
           onClick={() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Task from "./Task";
+import Task from "./CompletedTask";
 import { v4 as uuidv4 } from "uuid";
 
 function Completed(props) {
@@ -16,7 +16,7 @@ function Completed(props) {
   }
 
   return (
-    <div className="card w-100">
+    <div className="card w-100 mt-3">
       <div className="card-body">
         <h2 className="card-title">
           {props.taskList.length === 0

@@ -87,13 +87,25 @@ ul {
     padding: 15px;
 }
 
+
+.dueDate ion-icon {
+    color: rgba(255, 0, 0, 0.52);
+    font-size: 120%;
+    margin-top: 10px;
+
+}
+
+.dueSubText {
+    font-size: 90%;
+}
+
 /* -------------------------------- */
 /* --TODO-TASK-- */
 /* -------------------------------- */
 
 /* Hide the browser's default checkbox */
 .Task {
-    float: left;
+    /* float: left; */
     margin-top: 3px;
     margin-left: 5px;
 }
@@ -121,9 +133,14 @@ ul {
     background-color: #2ecc71;
 }
 
+.taskCompleted {
+    display: none;
+}
+
 .deleteIcon ion-icon {
     font-size: 24px;
     transition: color 0.4s;
+    margin-top: 10px;
 }
 
 .deleteIcon ion-icon:hover {
@@ -135,6 +152,7 @@ label {
     font-weight: 500;
     font-size: 100%;
     color: #2C3A47;
+    margin-bottom: 0px;
 }
 
 /* -------------------------------- */

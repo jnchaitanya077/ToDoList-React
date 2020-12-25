@@ -22,6 +22,8 @@ function Today(props) {
                   taskName={filtered.taskName}
                   isDone={filtered.isDone}
                   id={filtered.Id}
+                  date={filtered.dueDate}
+                  dtoggle={true}
                 />
               </li>
             );

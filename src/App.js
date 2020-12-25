@@ -23,7 +23,7 @@ function App() {
 
   function handleSubmit(event) {
     if (
-      task.taskName !== "" &&
+      task !== "" &&
       validateDate(
         new Date(date).toLocaleDateString(),
         new Date().toLocaleDateString()
@@ -39,6 +39,7 @@ function App() {
               isDone: false,
               Id: id++,
               date: date,
+              dueDate: formatDueDate(date),
             },
           ],
         };
@@ -96,6 +97,15 @@ function App() {
     taskDate = new Date(formatDate(taskDate));
     presentDate = new Date(formatDate(presentDate));
     return +taskDate >= +presentDate;
+  }
+
+  function formatDueDate(d) {
+    let options = {
+      month: "short",
+      day: "numeric",
+    };
+    let date = new Date(d).toLocaleDateString("en-US", options);
+    return date;
   }
 
   return (

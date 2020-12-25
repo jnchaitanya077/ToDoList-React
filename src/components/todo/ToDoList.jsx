@@ -37,7 +37,7 @@ function ToDo(props) {
         ) : null}
 
         <div className="row">
-          <div className="col-6">
+          <div className="col-6 pl-0">
             <input
               className="inputText"
               placeholder="Enter Your Task"
@@ -57,6 +57,7 @@ function ToDo(props) {
                 width: "100%",
                 border: "1px solid rgb(85 85 85 / 35%)",
                 color: "rgb(85 85 85)",
+                paddingLeft: "5px",
               }}
             />
           </div>
@@ -72,15 +73,15 @@ function ToDo(props) {
         </div>
 
         <div style={taskListItems}>
-          <ul>
+          <ul class="list-group">
             {props.taskList.map((eachTask) => {
               return (
                 <li key={uuidv4()}>
-                  {" "}
                   <Task
                     taskName={eachTask.taskName}
                     isDone={eachTask.isDone}
                     id={eachTask.Id}
+                    date={eachTask.dueDate}
                     onTaskSelect={handleSelect}
                     onTaskDelete={handleDelete}
                   />
