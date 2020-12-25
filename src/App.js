@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ToDo from "./components/todo/ToDoList";
 import CompletedList from "./components/todo/Completed";
 import TodaysList from "./components/todo/Today";
@@ -15,6 +15,12 @@ function App() {
   const [task, addTaskName] = useState("");
   var [count, setCompletedCount] = useState(0);
 
+  useEffect(() => {
+    let tasks = fetch("http://localhost:9000/getTasks")
+      .then((data) => data.json())
+      .then((data) => addTask(data));
+  }, []);
+
   function handleChange(event) {
     var tName = event.target.value;
     addTaskName(tName);
@@ -30,20 +36,23 @@ function App() {
       )
     ) {
       setMsg(""); // reset the error message.
-      addTask((prev) => {
-        return {
-          taskList: [
-            ...prev.taskList,
-            {
-              taskName: task,
-              isDone: false,
-              Id: id++,
-              date: date,
-              dueDate: formatDueDate(date),
-            },
-          ],
-        };
-      });
+
+      var newTask = {
+        taskName: task,
+        isDone: false,
+        Id: id++,
+        date: date,
+        dueDate: formatDueDate(date),
+      };
+      const requestOptions = {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask),
+      };
+      //send to api using post method.
+      fetch("http://localhost:9000/submitTask", requestOptions)
+        .then((res) => res.json())
+        .then((data) => addTask(data));
     } else {
       setMsg("Enter Valid Date");
     }
@@ -54,28 +63,39 @@ function App() {
 
   function handleSelect(id) {
     // find the index of the object selected
-    let i = list.taskList.findIndex((x) => x.Id === id);
-    //   create new copy of taskList array
-    let updatedArray = list.taskList.slice();
-    // update the task status with id
-    updatedArray[i] = {
-      ...updatedArray[i],
-      isDone: !updatedArray[i].isDone,
+    let i = { id: list.taskList.findIndex((x) => x.Id === id) };
+
+    const requestOptions = {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(i),
     };
-    //set the state with updated taskList
-    addTask({ taskList: updatedArray });
-    //updated the Completed Task Count
-    setCompletedCount(completedCount(updatedArray));
+    //send to api using post method.
+    fetch("http://localhost:9000/selectTask", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        addTask(data);
+        setCompletedCount(completedCount(data.taskList));
+      });
   }
 
   function handleDelete(id) {
-    let i = list.taskList.findIndex((x) => x.Id === id);
-    let newArray = list.taskList.slice();
-    newArray.splice(i, 1);
-    addTask({ taskList: newArray });
+    let i = { id: list.taskList.findIndex((x) => x.Id === id) };
+
+    const requestOptions = {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(i),
+    };
+
+    //send to api using post method.
+    fetch("http://localhost:9000/deleteTask", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        addTask(data);
+        setCompletedCount(completedCount(data.taskList));
+      });
     id--;
-    //updated the Completed Task Count
-    setCompletedCount(completedCount(newArray));
   }
 
   function handleDateChange(date) {
@@ -135,7 +155,7 @@ function App() {
         </div>
 
         <div className="col-12 col-md-8 col-lg-4">
-          <TodaysList taskList={list.taskList} />
+          <TodaysList taskList={list.taskList} onTaskSelect={handleSelect} />
           <CompletedList
             taskList={list.taskList}
             completedCount={count}

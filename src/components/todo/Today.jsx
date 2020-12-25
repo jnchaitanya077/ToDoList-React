@@ -8,6 +8,10 @@ function Today(props) {
     let taskDate = new Date(eachtask.date).toDateString();
     return todayDate === taskDate;
   }
+
+  function handleClick(id) {
+    props.onTaskSelect(id);
+  }
   return (
     <div className="card w-100">
       <div className="card-body">
@@ -24,6 +28,7 @@ function Today(props) {
                   id={filtered.Id}
                   date={filtered.dueDate}
                   dtoggle={true}
+                  onTaskSelect={handleClick}
                 />
               </li>
             );

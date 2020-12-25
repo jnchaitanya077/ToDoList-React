@@ -73,7 +73,7 @@ function ToDo(props) {
         </div>
 
         <div style={taskListItems}>
-          <ul class="list-group">
+          <ul className="list-group">
             {props.taskList.map((eachTask) => {
               return (
                 <li key={uuidv4()}>
