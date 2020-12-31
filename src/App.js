@@ -31,8 +31,8 @@ function App() {
     if (
       task !== "" &&
       validateDate(
-        new Date(date).toLocaleDateString(),
-        new Date().toLocaleDateString()
+        new Date(date).toLocaleDateString(), //task created date
+        new Date().toLocaleDateString() // current date
       )
     ) {
       setMsg(""); // reset the error message.
