@@ -16,7 +16,7 @@ function App() {
   var [count, setCompletedCount] = useState(0);
 
   useEffect(() => {
-    let tasks = fetch("http://localhost:9000/getTasks")
+    fetch("http://localhost:9000/getTasks")
       .then((data) => data.json())
       .then((data) => addTask(data));
   }, []);
@@ -63,7 +63,7 @@ function App() {
 
   function handleSelect(id) {
     // find the index of the object selected
-    let i = { id: list.taskList.findIndex((x) => x.Id === id) };
+    let i = { id: id };
 
     const requestOptions = {
       method: "post",
@@ -80,7 +80,8 @@ function App() {
   }
 
   function handleDelete(id) {
-    let i = { id: list.taskList.findIndex((x) => x.Id === id) };
+    // selected task id.
+    let i = { id: id };
 
     const requestOptions = {
       method: "post",
@@ -102,6 +103,7 @@ function App() {
     setDate(date);
   }
 
+  // Helper Functions
   function completedCount(arr) {
     const c = arr.filter((eachTask) => eachTask.isDone === true).length;
     return c;
